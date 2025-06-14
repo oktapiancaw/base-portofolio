@@ -56,7 +56,7 @@ function altitudeRange(start?: number, end?: number) {
   return "-";
 }
 
-const qrData = await QRCode.toDataURL(Astro.url.href);
+const qrData = await QRCode.toDataURL("https://oxtcaw.com" + Astro.url.pathname);
 ---
 
 <Layout title="Oxtcaw - Coffee Bean Collections">
