@@ -27,7 +27,7 @@ const beans = defineCollection({
 const beanResearchs = defineCollection({
   // Load Markdown and MDX files in the `src/content/beans/` directory.
   loader: glob({
-    base: "./src/content/bean-researchs",
+    base: "./src/content/beanResearchs",
     pattern: "**/*.{md,mdx}",
   }),
   // Type-check frontmatter using a schema
