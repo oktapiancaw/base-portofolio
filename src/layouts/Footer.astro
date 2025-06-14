@@ -1,0 +1,75 @@
+---
+
+---
+
+<footer class="mt-24 border-t border-gray-100 px-0 py-4 dark:border-gray-800">
+  <div class="flex items-center justify-between">
+    <a href="/" target=" _blank"
+      ><div
+        class="relative inline-block whitespace-nowrap text-xs text-gray-500"
+      >
+        <div style="opacity: 1; transform: none;">
+          <span>© 2025 Oktapian.</span>
+        </div>
+      </div></a
+    ><div class="text-xs text-gray-400">
+      <button
+        class="relative inline-flex h-7 w-7 items-center justify-center text-gray-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-gray-950 dark:text-gray-400 dark:data-[checked=true]:text-gray-50"
+        type="button"
+        aria-label="Switch to System theme"
+        data-id="system"
+        data-checked="true"
+        id="theme-toggle"
+        ><div
+          class="absolute inset-0 pointer-events-none rounded-lg bg-gray-100 dark:bg-gray-800"
+          style="opacity: 1;"
+        >
+        </div><div class="z-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-sun h-4 w-4 dark:hidden"
+            ><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"
+            ></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"
+            ></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"
+            ></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"
+            ></path><path d="m19.07 4.93-1.41 1.41"></path></svg
+          >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-moon h-4 w-4 hidden dark:block"
+            ><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+          >
+        </div></button
+      >
+    </div>
+  </div>
+  <script>
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
+      if (localStorage.theme === "dark") {
+        localStorage.theme = "light";
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.setProperty("color-scheme", "light");
+      } else {
+        localStorage.theme = "dark";
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.setProperty("color-scheme", "dark");
+      }
+    });
+  </script>
+</footer>

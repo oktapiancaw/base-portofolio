@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate?: string;
+}
+
+function formatDateRange(startDate: string, endDate?: string) {
+  const start = new Date(startDate);
+  if (isNaN(start.getTime())) return "";
+  const startFormatted = start.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+
+  if (!endDate) {
+    return startFormatted;
+  }
+
+  if (endDate === "Present") {
+    return `${startFormatted} - Present`;
+  }
+  const end = new Date(endDate);
+  if (isNaN(end.getTime())) return startFormatted;
+
+  const endFormatted = end.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+
+  return `${startFormatted} - ${endFormatted}`;
+}
+
+const { title, company, startDate, endDate } = Astro.props;
+---
+
+<a
+  class="relative overflow-hidden rounded-2xl bg-gray-300/30 p-[1px] dark:bg-gray-600/30"
+  href="https://oxtcaw.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  style="position: relative; overflow: hidden;"
+  ><div
+    class="pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] transition-opacity duration-200 opacity-0 from-gray-900 via-gray-800 to-gray-700 blur-2xl dark:from-gray-100 dark:via-gray-200 dark:to-gray-50"
+    style="width: 64px; height: 64px; left: 232px; top: 37px;"
+  >
+  </div><div
+    class="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-gray-950"
+  >
+    <div class="relative flex w-full flex-row justify-between">
+      <div>
+        <h4 class="font-normal dark:text-gray-100 text-sm md:text-base">
+          {title}
+        </h4><p class="text-gray-500 dark:text-gray-400">{company}</p>
+      </div><p class="text-gray-600 dark:text-gray-400 text-sm md:text-base">
+        {formatDateRange(startDate, endDate)}
+      </p>
+    </div>
+  </div></a
+>

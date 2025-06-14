@@ -1,0 +1,33 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  icon?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark" style="color-scheme: dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <script></script>
+  </head>
+  <body class="bg-white tracking-tight antialiased dark:bg-gray-950">
+    <div
+      class="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]"
+    >
+      <div
+        class="relative mx-auto w-full max-w-screen-sm flex-1 px-10 pt-20 border-x border-gray-300 dark:border-gray-800 border-dashed"
+      >
+        <slot />
+      </div>
+    </div>
+  </body>
+</html>

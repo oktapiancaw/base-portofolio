@@ -1,0 +1,37 @@
+---
+interface Props {
+  degree: string;
+  university: string;
+  startYear: string;
+  endYear?: string;
+}
+
+const { degree, university, startYear, endYear } = Astro.props;
+---
+
+<a
+  class="relative overflow-hidden rounded-2xl bg-gray-300/30 p-[1px] dark:bg-gray-600/30"
+  href="https://www.budiluhur.ac.id/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style="position: relative; overflow: hidden;"
+  ><div
+    class="pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] transition-opacity duration-200 opacity-0 from-gray-900 via-gray-800 to-gray-700 blur-2xl dark:from-gray-100 dark:via-gray-200 dark:to-gray-50"
+    style="width: 64px; height: 64px; left: 572.5px; top: -25px;"
+  >
+  </div><div
+    class="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-gray-950"
+  >
+    <div class="relative flex w-full flex-row justify-between">
+      <div>
+        <p class="text-gray-500 dark:text-gray-400 mb-1 text-sm md:text-base">
+          {degree}
+        </p><h4 class="font-normal dark:text-gray-100">
+          {university}
+        </h4>
+      </div><p class="text-gray-600 dark:text-gray-400 text-sm md:text-base">
+        {startYear} - {endYear || "Present"}
+      </p>
+    </div>
+  </div></a
+>

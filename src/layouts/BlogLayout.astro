@@ -1,0 +1,200 @@
+---
+import QRCode from "qrcode";
+import type { CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../layouts/Footer.astro";
+import { Image } from "astro:assets";
+
+type Props = CollectionEntry<"beans">["data"];
+
+const {
+  title,
+  producer,
+  producerImg,
+  tasteNotes,
+  species,
+  varietas,
+  processType,
+  roastLevel,
+  farmLocation,
+  farmAltitude,
+  farmAltitudeTo,
+  boughtDate,
+  boughtPlace,
+  weight,
+} = Astro.props;
+
+function formtDate(date: string) {
+  const dateObj = new Date(date);
+  if (isNaN(dateObj.getTime())) return "";
+  return dateObj.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+const tasteNotesArray = tasteNotes.split(", ");
+function capitalizeWords(string: string) {
+  return string
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function altitudeRange(start?: number, end?: number) {
+  if (start && !end) {
+    return `${start} masl`;
+  } else if (start && end) {
+    if (start === end) return `${start}`;
+    return `${start} - ${end} masl`;
+  } else if (end && !start) {
+    return `${end} masl`;
+  }
+  return "-";
+}
+
+const qrData = await QRCode.toDataURL(Astro.url.href);
+---
+
+<Layout title="Oxtcaw - Coffee Bean Collections">
+  <header class="mb-12 flex flex-col md:flex-row justify-start items-center">
+    <div>
+      <Image
+        src={producerImg}
+        alt=""
+        width={80}
+        height={80}
+        class="w-24 md:w-20 h-24 md:h-20 rounded-lg flex items-center space-x-2 border-2 border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-300/50 mb-8 md:mb-0 dark:shadow-gray-900/50"
+        loading="eager"
+      />
+    </div><div class="md:ml-4">
+      <a
+        class="font-bold text-xl block md:inline-block uppercase text-black dark:text-white text-center md:text-left"
+        href="">{title.toUpperCase()}</a
+      ><p
+        class="text-gray-600 dark:text-gray-500 text-center md:text-left"
+        style="opacity: 1;"
+      >
+        <span>{capitalizeWords(producer)}</span>
+      </p>
+    </div>
+  </header>
+  <main class="space-y-10 lg:space-y-16">
+    <section class="opacity: 1; filter: blur(0px); transform: none;">
+      <h3
+        class="mb-4 text-lg font-medium lg:text-md xl:mb-3 text-center md:text-left"
+      >
+        Taste Notes
+      </h3>
+      <div
+        class="flex flex-wrap items-center justify-center md:justify-start space-x-3"
+      >
+        {
+          tasteNotesArray.map((note: string) => (
+            <span class="group relative inline-flex shrink-0 items-center gap-[1px] rounded-full bg-gray-100 px-2.5 py-1 my-1.5 text-sm text-black transition-colors duration-200 hover:bg-gray-600 hover:text-gray-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
+              #{note}
+            </span>
+          ))
+        }
+      </div>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
+      <h3
+        class="mb-4 text-lg font-medium lg:text-md xl:mb-3 text-center md:text-left"
+      >
+        Detail Coffee
+      </h3>
+      <div
+        class="flex flex-col sm:flex-row items-center justify-center sm:justify-between sm:flex sm:space-x-3"
+      >
+        <p
+          class="text-gray-600 dark:text-gray-400 text-center sm:text-left mb-2 sm:mb-0"
+        >
+          <span class="font-semibold block">Species:</span>
+          {capitalizeWords(species)}
+        </p>
+        <p
+          class="text-gray-600 dark:text-gray-400 text-center sm:text-left mb-2 sm:mb-0"
+        >
+          <span class="font-semibold block">Variety:</span>
+          {varietas}
+        </p>
+        <p
+          class="text-gray-600 dark:text-gray-400 text-center sm:text-left mb-2 sm:mb-0"
+        >
+          <span class="font-semibold block">Process:</span>
+          {capitalizeWords(processType)}
+        </p>
+        <p
+          class="text-gray-600 dark:text-gray-400 text-center sm:text-left mb-2 sm:mb-0"
+        >
+          <span class="font-semibold block">Roast Level:</span>
+          {capitalizeWords(roastLevel)}
+        </p>
+      </div>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
+      <h3
+        class="mb-4 text-lg font-medium lg:text-md xl:mb-3 text-center md:text-left"
+      >
+        Description
+      </h3><div
+        class="flex-1 text-gray-600 mb-6 dark:text-gray-400 text-justify md:text-left"
+      >
+        <slot />
+      </div>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
+      <h3
+        class="mb-4 text-lg font-medium lg:text-md xl:mb-3 text-center md:text-left"
+      >
+        Farm Detail
+      </h3>
+
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">Location:</span>
+        {capitalizeWords(farmLocation)}
+      </p>
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">Altitude:</span>
+        {altitudeRange(farmAltitude || 0, farmAltitudeTo || 0)}
+      </p>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
+      <h3
+        class="mb-4 text-lg font-medium lg:text-md xl:mb-3 text-center md:text-left"
+      >
+        Others
+      </h3>
+
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">Bought Date:</span>
+        {boughtDate ? formtDate(boughtDate) : "-"}
+      </p>
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">Bought Place:</span>
+        {capitalizeWords(boughtPlace)}
+      </p>
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">Weight:</span>
+        {weight}
+      </p>
+      <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
+        <span class="font-semibold block">QR Code:</span>
+      </p>
+
+      <div class="flex justify-center items-center md:justify-start">
+        <Image
+          src={qrData}
+          alt=""
+          width={20}
+          height={20}
+          class="w-36 h-36 rounded-lg flex items-center space-x-2 border-2 border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-300/50 mb-8 md:mb-0 dark:shadow-gray-900/50"
+          loading="eager"
+        />
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
