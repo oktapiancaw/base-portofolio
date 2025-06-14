@@ -69,10 +69,11 @@ const qrData = await QRCode.toDataURL(Astro.url.href);
         loading="eager"
       />
     </div><div class="md:ml-4">
-      <a
+      <p
         class="font-bold text-xl block md:inline-block uppercase text-black dark:text-white text-center md:text-left"
-        href="">{title.toUpperCase()}</a
-      ><p
+      >
+        {title.toUpperCase()}
+      </p><p
         class="text-gray-600 dark:text-gray-500 text-center md:text-left"
         style="opacity: 1;"
       >
@@ -194,6 +195,12 @@ const qrData = await QRCode.toDataURL(Astro.url.href);
           loading="eager"
         />
       </div>
+
+      <p class="mt-8 text-gray-600 text-sm italic dark:text-gray-400">
+        <b> Disclaimer:</b> This content is for personal and educational purposes
+        only. All coffee information is respectfully showcased without any commercial
+        intent.
+      </p>
     </section>
   </main>
   <Footer />

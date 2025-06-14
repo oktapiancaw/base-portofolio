@@ -88,17 +88,23 @@ const posts = await getCollection("beans");
       </div>
       <div class="flex flex-col space-y-4">
         {
-          posts.map((post) => (
+          posts.map((post, index) => (
             <BeanCard
               href={"/beans/" + post.id}
               title={post.data.title}
               producer={post.data.producer}
               producerImg={post.data.producerImg}
               tasteNotes={post.data.tasteNotes}
+              loading={index <= 4 ? "eager" : "lazy"}
             />
           ))
         }
       </div>
+      <p class="mt-8 text-gray-600 text-sm italic dark:text-gray-400">
+        <b> Disclaimer:</b> This content is for personal and educational purposes
+        only. All coffee information is respectfully showcased without any commercial
+        intent.
+      </p>
     </section>
   </main>
   <Footer />
