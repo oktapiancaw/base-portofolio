@@ -3,6 +3,7 @@ import QRCode from "qrcode";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../layouts/Footer.astro";
+import SocialBadge2 from "../components/SocialBadge2.astro";
 import { Image } from "astro:assets";
 
 type Props = CollectionEntry<"beans">["data"];
@@ -11,6 +12,7 @@ const {
   title,
   producer,
   producerImg,
+  producerLink,
   tasteNotes,
   species,
   varietas,
@@ -77,7 +79,16 @@ const qrData = await QRCode.toDataURL(Astro.url.href);
         class="text-gray-600 dark:text-gray-500 text-center md:text-left"
         style="opacity: 1;"
       >
-        <span>{capitalizeWords(producer)}</span>
+        <span>{producer}</span>
+        
+        {
+          producerLink ? (
+            <br />
+            <SocialBadge2 href={producerLink} label="Producer site" />
+          ) : (
+            ""
+          )
+        }
       </p>
     </div>
   </header>
@@ -168,7 +179,6 @@ const qrData = await QRCode.toDataURL(Astro.url.href);
       >
         Others
       </h3>
-
       <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
         <span class="font-semibold block">Bought Date:</span>
         {boughtDate ? formtDate(boughtDate) : "-"}
@@ -181,23 +191,23 @@ const qrData = await QRCode.toDataURL(Astro.url.href);
         <span class="font-semibold block">Weight:</span>
         {weight}
       </p>
+      <br/>
       <p class="text-gray-600 dark:text-gray-400 text-center md:text-left mb-2">
-        <span class="font-semibold block">QR Code:</span>
+        <span class="font-semibold block">Share this page:</span>
       </p>
-
       <div class="flex justify-center items-center md:justify-start">
         <Image
           src={qrData}
           alt=""
           width={20}
           height={20}
-          class="w-36 h-36 rounded-lg flex items-center space-x-2 border-2 border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-300/50 mb-8 md:mb-0 dark:shadow-gray-900/50"
+          class="w-40 sm:w-52 h-40 sm:h-52 rounded-lg flex items-center space-x-2 border-2 border-gray-200 dark:border-gray-800 shadow-lg shadow-gray-300/50 mb-8 md:mb-0 dark:shadow-gray-900/50"
           loading="eager"
         />
       </div>
 
       <p class="mt-8 text-gray-600 text-sm italic dark:text-gray-400">
-        <b> Disclaimer:</b> This content is for personal and educational purposes
+        <b>*Disclaimer:</b> This content is for personal and educational purposes
         only. All coffee information is respectfully showcased without any commercial
         intent.
       </p>

@@ -5,7 +5,8 @@ import { Image } from "astro:assets";
 import BeanCard from "../../components/BeanCard.astro";
 
 import { getCollection } from "astro:content";
-const posts = await getCollection("beans");
+const beans = await getCollection("beans");
+const beanResearchs = await getCollection("beanResearchs");
 ---
 
 <Layout title="Oxtcaw | Coffee Bean Collections">
@@ -81,15 +82,14 @@ const posts = await getCollection("beans");
         Coffee Bean Collections
       </h3><div class="flex-1">
         <p class="text-gray-600 mb-6 dark:text-gray-400">
-          Since I love consuming coffee, and learning about coffee, here are
-          some of the coffee collections that have been purchased from coffee
-          roastery.
+          Since I love consuming coffee. here are some of the coffee collections
+          that have been purchased from coffee roastery.
         </p>
       </div>
       <div class="flex flex-col space-y-4">
         {
-          posts.length > 0 ? (
-            posts.map((post, index) => (
+          beans.length > 0 ? (
+            beans.map((post, index) => (
               <BeanCard
                 href={"/beans/" + post.id}
                 title={post.data.title}
@@ -108,12 +108,37 @@ const posts = await getCollection("beans");
           )
         }
       </div>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
+      <h3 class="mb-4 text-lg font-medium lg:text-md xl:mb-3">
+        Coffee Researchs
+      </h3><div class="flex-1">
+        <p class="text-gray-600 mb-6 dark:text-gray-400">
+          Here are some of the coffee researchs that I have done.
+        </p>
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        {
+          beanResearchs.length > 0 ? (
+            ""
+          ) : (
+            <p>
+              <span class="text-gray-600 dark:text-gray-400">
+                Sorry, there is nothing here...
+              </span>
+            </p>
+          )
+        }
+      </div>
+    </section>
+    <section style="opacity: 1; filter: blur(0px); transform: none;">
       <p class="mt-8 text-gray-600 text-sm italic dark:text-gray-400">
         <b> Disclaimer:</b> This content is for personal and educational purposes
         only. All coffee information is respectfully showcased without any commercial
         intent.
       </p>
     </section>
+    <Footer />
   </main>
-  <Footer />
 </Layout>

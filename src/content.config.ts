@@ -10,6 +10,7 @@ const beans = defineCollection({
       title: z.string(),
       producer: z.string(),
       producerImg: z.string(),
+      producerLink: z.string().optional().nullable(),
       tasteNotes: z.string(),
       species: z.string(),
       varietas: z.string(),
@@ -23,5 +24,17 @@ const beans = defineCollection({
       weight: z.string(),
     }),
 });
+const beanResearchs = defineCollection({
+  // Load Markdown and MDX files in the `src/content/beans/` directory.
+  loader: glob({
+    base: "./src/content/bean-researchs",
+    pattern: "**/*.{md,mdx}",
+  }),
+  // Type-check frontmatter using a schema
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+    }),
+});
 
-export const collections = { beans };
+export const collections = { beans, beanResearchs };
