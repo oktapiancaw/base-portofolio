@@ -11,13 +11,18 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/sitemap": "^3.4.1",
+    "@lucide/astro": "^0.544.0",
+    "@supabase/supabase-js": "^2.58.0",
     "@tailwindcss/vite": "^4.1.10",
     "astro": "^5.9.2",
+    "astro-icon": "^1.1.5",
+    "crypto-js": "^4.2.0",
     "motion": "^12.17.3",
     "qrcode": "^1.5.4",
     "tailwindcss": "^4.1.10"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/qrcode": "^1.5.5"
   }
 }

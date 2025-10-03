@@ -1,0 +1,51 @@
+---
+
+import { Moon, Sun } from "@lucide/astro";
+---
+
+<footer
+  class="relative border-t border-gray-300 dark:border-gray-900 w-full px-12 py-8 bg-gradient-to-t from-gray-200/80 dark:from-gray-950/55 to-gray-200/50 dark:to-gray-950/30"
+>
+  <div class="flex justify-between items-center">
+    <a href="/" target=" _blank"
+      ><div
+        class="relative inline-block whitespace-nowrap text-xs text-gray-500"
+      >
+        <div style="opacity: 1; transform: none;">
+          <span>© 2025 Oktapian.</span>
+        </div>
+      </div></a
+    >
+    <div class="text-gray-400">
+      <button
+        class="relative inline-flex p-2 items-center justify-center text-gray-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-gray-950 dark:text-gray-400 dark:data-[checked=true]:text-gray-50"
+        type="button"
+        aria-label="Switch to System theme"
+        data-id="system"
+        data-checked="true"
+        id="theme-toggle"
+        ><div
+          class="absolute inset-0 pointer-events-none rounded-lg bg-gray-100 dark:bg-gray-900"
+          style="opacity: 1;"
+        >
+        </div><div class="z-10 relative">
+          <Sun class="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 " />
+          <Moon class=" top-0 absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-0 transition-all dark:scale-100" />
+        </div>
+      </button>
+    </div>
+  </div>
+  <script>
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
+      if (localStorage.theme === "dark") {
+        localStorage.theme = "light";
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.setProperty("color-scheme", "light");
+      } else {
+        localStorage.theme = "dark";
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.setProperty("color-scheme", "dark");
+      }
+    });
+  </script>
+</footer>

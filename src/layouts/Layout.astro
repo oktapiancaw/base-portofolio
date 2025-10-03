@@ -10,7 +10,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="dark" style="color-scheme: dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -19,12 +19,22 @@ const { title } = Astro.props;
     <title>{title}</title>
     <script></script>
   </head>
-  <body class="bg-white tracking-tight antialiased dark:bg-gray-950">
+  <body class="relative from-gray-100 to-gray-50 tracking-tight antialiased bg-gradient-to-bl dark:from-gray-950 dark:to-gray-900">
+    <div
+        class="fixed inset-0 z-0 
+    bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)]
+
+    dark:bg-[linear-gradient(to_right,#111827_1px,transparent_1px),linear-gradient(to_bottom,#111827_1px,transparent_1px)]
+    
+    bg-[size:28px_28px]
+    [mask-image:radial-gradient(ellipse_80%_80%_at_100%_0%,#000_50%,transparent_90%)]"
+      />
     <div
       class="flex min-h-screen w-full flex-col font-[family-name:var(--font-inter-tight)]"
     >
+    
       <div
-        class="relative mx-auto w-full max-w-screen-sm flex-1 px-10 pt-20 border-x border-gray-300 dark:border-gray-800 border-dashed"
+        class="relative mx-auto w-full max-w-screen-md min-h-screen flex-1 pt-20 border-x border-gray-300 dark:border-gray-900 shadow-2xl shadow-gray-300 dark:shadow-gray-900/50 dark:bg-gray-950/10 backdrop-blur-xs"
       >
         <slot />
       </div>

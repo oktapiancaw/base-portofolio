@@ -1,223 +1,166 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
-import Footer from "../layouts/Footer.astro";
 import ExpCard from "../components/ExpCard.astro";
 import EduCard from "../components/EduCard.astro";
-import SocialBadge from "../components/SocialBadge.astro";
+import { supabase } from "../lib/supabase/client";
+import { SquareArrowOutUpRight } from "@lucide/astro";
+import { Icon } from "astro-icon/components";
+import type {
+  ExperienceType,
+  EducationType,
+  SocialMediaType,
+  ProjectType,
+} from "../constant/schema.types";
+import ProjectCard from "../components/ProjectCard.astro";
+import Footer from "../components/Footer.astro";
 
-const data = {
-  experiences: [
-    {
-      title: "Team Lead Data Engineer",
-      company: "eBdesk Teknologi",
-      startDate: "2024-10-01",
-      endDate: "Present",
-    },
-    {
-      title: "Data Engineer",
-      company: "Ebdesk Teknologi",
-      startDate: "2023-08-01",
-      endDate: "2024-10-01",
-    },
-    {
-      title: "Backend Developer",
-      company: "Ebdesk Teknologi",
-      startDate: "2022-04-01",
-      endDate: "2023-08-01",
-    },
-    {
-      title: "Blockhain & Backend Developer",
-      company: "Ebdesk Teknologi",
-      startDate: "2021-09-01",
-      endDate: "2022-04-01",
-    },
-    {
-      title: "Fullstack Developer",
-      company: "Freelance",
-      startDate: "2022-03-01",
-    },
-  ],
-  educations: [
-    {
-      degree: "Bachelor of Computer Science",
-      university: "Budiluhur University",
-      startYear: "2022",
-      endYear: "2026",
-    },
-  ],
-  media_socials: [
-    {
-      label: "Github",
-      href: "https://github.com/oktapiancaw",
-    },
-    {
-      label: "Linkedin",
-      href: "https://www.linkedin.com/in/oktapiancaw/",
-    },
-    {
-      label: "Instagram",
-      href: "https://www.instagram.com/oktapiancaw/",
-    },
-    {
-      label: "Codewars",
-      href: "https://www.codewars.com/users/oktapiancaw",
-    },
-    {
-      label: "Daily.dev",
-      href: "https://app.daily.dev/oktapiancaw",
-    },
-  ],
-};
+const { data: person, error: personError } = await supabase
+  .from("person")
+  .select("full_name, headline, bio, location")
+  .eq("person_id", 1)
+  .single();
+
+if (personError) {
+  console.error(personError.message);
+}
+
+const { data: experiences, error: expError } = await supabase
+  .from("experience")
+  .select("*")
+  .eq("person_id", 1)
+  .order("start_date", { ascending: false });
+
+const { data: education, error: eduError } = await supabase
+  .from("education")
+  .select("*")
+  .eq("person_id", 1)
+  .order("start_date", { ascending: false });
+
+const { data: socials, error: socError } = await supabase
+  .from("social_media")
+  .select("*")
+  .eq("person_id", 1);
+const { data: projects, error: proError } = await supabase
+  .from("project")
+  .select("*")
+  .eq("person_id", 1);
+
+const expList: ExperienceType[] = experiences ?? [];
+const projList: ProjectType[] = projects ?? [];
+const eduList: EducationType[] = education ?? [];
+const socialList: SocialMediaType[] = socials ?? [];
 ---
 
 <Layout title="Oxtcaw | Oktapian Candra Adi Wijaya">
-  <header class="mb-12 flex items-center justify-start">
+  <header class="flex px-12 items-center justify-start">
     <div class="">
       <Image
         src="https://avatars.githubusercontent.com/u/48079010?s=400&u=371f0b788ebedfc5ae91f532330d8710d31ef6f0&v=4"
         alt=""
         width={80}
         height={80}
-        class="w-16 h-16 rounded-full flex items-center space-x-2"
+        class="w-16 h-16 md:w-18 md:h-18 rounded-xl border-gray-300/80 dark:border-gray-700/80 border-3 md:border-4 flex items-center space-x-2"
         loading="eager"
       />
-      <!--
-            <image
-            src="https://avatars.githubusercontent.com/u/48079010?s=400&u=371f0b788ebedfc5ae91f532330d8710d31ef6f0&v=4"
-            alt=""
-          /> -->
-      <!-- <a class="" href="/"> </a> -->
     </div><div class="ml-4">
-      <a class="font-medium text-black dark:text-white" href="/">Oktapian CAW</a
-      ><p class="text-gray-600 dark:text-gray-500" style="opacity: 1;">
-        <span class="sr-only">Programmer</span><span
-          class="inline-block whitespace-pre"
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">P</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">r</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">o</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">g</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">r</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">a</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">m</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">m</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">e</span
-          ><span
-            aria-hidden="true"
-            class="inline-block whitespace-pre"
-            style="opacity: 1;">r</span
-          ></span
-        >
+      <h2 class="font-medium text-black dark:text-white text-base md:text-lg">
+        {person?.full_name || "Oktapian CAW"}
+      </h2>
+      <p
+        class="text-gray-600 text-sm sm:text-base dark:text-gray-500"
+        style="opacity: 1;"
+      >
+        {person?.headline || "Programmer"}
       </p>
     </div>
   </header>
-  <main class="space-y-16 lg:space-y-20">
-    <section style="opacity: 1; filter: blur(0px); transform: none;">
-      <h3 class="mb-4 text-lg font-medium lg:text-md xl:mb-3">About me</h3><div
-        class="flex-1"
+  <main class="py-16 px-12 relative flex flex-1 flex-col space-y-16">
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
       >
-        <p class="text-gray-600 mb-6 dark:text-gray-400">
-          Enjoy learning and exploring about the latest technologies. Passionate
-          about something new, fixing things that are lacking, creating better
-          solutions
-        </p>
-      </div>
-    </section>
-    <section style="opacity: 1; filter: blur(0px); transform: none;">
-      <h3 class="mb-5 text-lg font-medium lg:text-md xl:mb-3">
-        Work Experiences
-      </h3><div class="flex flex-col space-y-3">
+        About me
+      </h3>
+      <p class="text-gray-600 mb-6 dark:text-gray-400">
         {
-          data.experiences.map((exp) => (
-            <ExpCard
-              title={exp.title}
-              company={exp.company}
-              startDate={exp.startDate}
-              endDate={exp.endDate}
-            />
-          ))
+          person?.bio ||
+            `Enjoy learning and exploring about the latest technologies. Passionate
+        about something new, fixing things that are lacking, creating better
+        solutions`
         }
+        <div class="flex flex-wrap gap-y-6 gap-x-2 sm:gap-2">
+          <div class="flex space-x-2 items-center">
+            {
+              socialList?.map((soc) => (
+                <a
+                  href={soc.url}
+                  class="p-2 inline-block border hover:bg-gray-300 dark:hover:bg-gray-800 duration-400 transition-colors border-gray-500 dark:border-gray-600 rounded-lg"
+                >
+                  <Icon
+                    name={soc.platform.toLowerCase()}
+                    class="dark:text-gray-600 text-gray-500 size-4"
+                  />
+                </a>
+              ))
+            }
+          </div>
+          <div class="flex space-x-2 items-center">
+            <hr class="w-6 border-t border-gray-500 dark:border-gray-700" />
+            <p class="text-gray-500 dark:text-gray-600 text-sm">
+              {person?.location}
+            </p>
+          </div>
+        </div>
+      </p>
+    </section>
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+      >
+        Experiences
+      </h3>
+      <div class="grid gap-y-4">
+        {expList?.map((exp) => <ExpCard experience={exp} />)}
       </div>
     </section>
-    <section style="opacity: 1; filter: blur(0px); transform: none;">
-      <h3 class="mb-5 text-lg font-medium lg:text-md xl:mb-3">
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+      >
+        Projects
+      </h3>
+      <div class="grid gap-y-4">
+        {projList?.map((proj) => <ProjectCard project={proj} />)}
+      </div>
+    </section>
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+      >
         Educations
-      </h3><div class="flex flex-col space-y-3">
-        {
-          data.educations.map((edu) => (
-            <EduCard
-              degree={edu.degree}
-              university={edu.university}
-              startYear={edu.startYear}
-              endYear={edu.endYear}
-            />
-          ))
-        }
+      </h3>
+      <div class="grid gap-y-6">
+        {eduList?.map((edu) => <EduCard education={edu} />)}
       </div>
     </section>
-    <section style="opacity: 1; filter: blur(0px); transform: none;">
-      <h3 class="mb-5 text-lg font-medium lg:text-md xl:mb-3">More</h3><p
-        class="mb-5 text-gray-600 dark:text-gray-400"
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
       >
-        I don't use spotify anymore, but you can check out my<!-- -->
-        <a
-          class="underline dark:text-gray-300"
-          href="https://open.spotify.com/user/5jqv1rlgu2eyhlvryq1h8r5cf?nd=1&dlsi=7de6e3797d544f0e"
-          >playlist</a
-        >, or maybe we can play game together on <a
-          class="underline dark:text-gray-300"
-          href="https://steamcommunity.com/profiles/76561199019772468/">steam</a
-        >.
+        Coffees
+      </h3>
+      <p class="my-2 font-normal text-gray-600 dark:text-gray-400">
+        I get really sick of it when the world is all about coding and data.
+        That's why I spend some of my time exploring other things, especially
+        coffee.
       </p>
-      <p class="mb-5 text-gray-600 dark:text-gray-400">
-        I also like to consume coffee with the manual brew method, and also like
-        to learn about coffee, you can also check my
-        <a class="underline dark:text-gray-300" href="/beans">coffee pages.</a>
-      </p>
-    </section>
-    <section style="opacity: 1; filter: blur(0px); transform: none;">
-      <h3 class="mb-5 text-lg font-medium lg:text-md xl:mb-3">Connect</h3><p
-        class="mb-5 text-gray-600 dark:text-gray-400"
+      <a
+        href=""
+        class="mt-4 underline decoration-dotted text-gray-800 hover:text-blue-900 duration-150 transition-colors dark:text-gray-300"
       >
-        Feel free to contact me at<!-- -->
-        <a
-          class="underline dark:text-gray-300"
-          href="mailto:oktapian1998@gmail.com">oktapian1998@gmail.com</a
-        >
-      </p><div class="flex flex-wrap items-center justify-start space-x-3">
-        {
-          data.media_socials.map((media) => (
-            <SocialBadge href={media.href} label={media.label} />
-          ))
-        }
-      </div>
+        See details <SquareArrowOutUpRight class="size-4 inline-block" />
+      </a>
     </section>
   </main>
   <Footer />

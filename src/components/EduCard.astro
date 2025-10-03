@@ -1,37 +1,40 @@
 ---
+import type { EducationType } from "../constant/schema.types";
+import { formatDateRange } from "../lib/formatter";
+
 interface Props {
-  degree: string;
-  university: string;
-  startYear: string;
-  endYear?: string;
+  education: EducationType;
 }
 
-const { degree, university, startYear, endYear } = Astro.props;
+const { education } = Astro.props;
 ---
 
-<a
-  class="relative overflow-hidden rounded-2xl bg-gray-300/30 p-[1px] dark:bg-gray-600/30"
-  href="https://www.budiluhur.ac.id/"
-  target="_blank"
-  rel="noopener noreferrer"
-  style="position: relative; overflow: hidden;"
-  ><div
-    class="pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] transition-opacity duration-200 opacity-0 from-gray-900 via-gray-800 to-gray-700 blur-2xl dark:from-gray-100 dark:via-gray-200 dark:to-gray-50"
-    style="width: 64px; height: 64px; left: 572.5px; top: -25px;"
-  >
-  </div><div
-    class="relative h-full w-full rounded-[15px] bg-white p-4 dark:bg-gray-950"
-  >
-    <div class="relative flex w-full flex-row justify-between">
-      <div>
-        <p class="text-gray-500 dark:text-gray-400 mb-1 text-sm md:text-base">
-          {degree}
-        </p><h4 class="font-normal dark:text-gray-100">
-          {university}
-        </h4>
-      </div><p class="text-gray-600 dark:text-gray-400 text-sm md:text-base">
-        {startYear} - {endYear || "Present"}
-      </p>
-    </div>
-  </div></a
+<div
+  class="flex w-full flex-col flex-1 space-y-2 px-4 pt-3 pb-6 shadow-lg shadow-gray-200/20 dark:shadow-gray-950/20 rounded-md border border-gray-200 from-gray-50/20 to-gray-200/20 dark:border-gray-900 bg-gradient-to-b dark:from-gray-900/20 dark:to-gray-950/20"
 >
+  <div class="flex justify-between">
+    <p class="font-semibold text-gray-800 dark:text-gray-100 text-lg">
+      {education.degree ? education.degree + " of " + education.field : education.field}
+    </p>
+    <p class="text-gray-600 dark:text-gray-500">{
+      
+        formatDateRange(
+          {
+            year: "numeric",
+          },
+          education.start_date,
+          education?.end_date ?? "Present"
+        )
+      }</p>
+  </div>
+  <div class="flex items-center space-x-3">
+    <p class="font-normal text-gray-600 dark:text-gray-400">
+      {education.institution}
+    </p>
+    {
+      education.grade && (
+        <span class="hidden sm:block uppercase whitespace-nowrap text-xs p-1.5 bg-gray-200 dark:bg-gray-900">Grade {education.grade}</span>
+      )
+    }
+  </div>
+</div>
