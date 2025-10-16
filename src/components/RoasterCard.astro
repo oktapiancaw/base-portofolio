@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import { SquareArrowOutUpRight } from "@lucide/astro";
+import type { CoffeeRoasteryType } from "../constant/schema.types";
+interface Props {
+  roastery: CoffeeRoasteryType;
+}
+
+const { roastery } = Astro.props;
+---
+
+<div
+  class="flex w-full flex-col hover:backdrop-blur-lg flex-1 space-y-2 p-3 shadow-lg shadow-gray-200/20 dark:shadow-gray-950/20 rounded-md border border-gray-200 from-gray-50/20 to-gray-200/20 dark:border-gray-900 bg-gradient-to-b dark:from-gray-900/20 dark:to-gray-950/20"
+>
+  <div class="flex space-x-4">
+    <Image
+      src={roastery.source_image}
+      alt=""
+      width={80}
+      height={80}
+      class="w-16 h-16 md:w-18 md:h-18 rounded-xl border-gray-300/80 dark:border-gray-700/80 border-3 md:border-4 flex items-center space-x-2"
+      loading="eager"
+    />
+    <div>
+      <p
+        class="font-semibold text-gray-800 dark:text-gray-100 text-lg sm:text-xl mr-2"
+      >
+        {roastery.name}
+      </p>
+      {
+        roastery.location && (
+            <p class="text-gray-500 dark:text-gray-600 text-sm">{roastery.location}</p>
+        )
+      }
+      <!-- <a
+        href="/beans"
+        class="mt-4 text-sm underline decoration-dotted text-gray-800 hover:text-blue-900 duration-150 transition-colors dark:text-gray-300"
+      >
+        See details <SquareArrowOutUpRight class="size-3 inline-block" />
+      </a> -->
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import ExpCard from "../components/ExpCard.astro";
 import EduCard from "../components/EduCard.astro";
+import Footer from "../components/Footer.astro";
 import { supabase } from "../lib/supabase/client";
 import { SquareArrowOutUpRight } from "@lucide/astro";
 import { Icon } from "astro-icon/components";
@@ -13,7 +14,6 @@ import type {
   ProjectType,
 } from "../constant/schema.types";
 import ProjectCard from "../components/ProjectCard.astro";
-import Footer from "../components/Footer.astro";
 
 const { data: person, error: personError } = await supabase
   .from("person")
@@ -56,7 +56,7 @@ const socialList: SocialMediaType[] = socials ?? [];
   <header class="flex px-6 sm:px-12 items-center justify-start">
     <div class="">
       <Image
-        src="https://avatars.githubusercontent.com/u/48079010?s=400&u=371f0b788ebedfc5ae91f532330d8710d31ef6f0&v=4"
+        src="/images/me.jpeg"
         alt=""
         width={80}
         height={80}
@@ -69,7 +69,6 @@ const socialList: SocialMediaType[] = socials ?? [];
       </h2>
       <p
         class="text-gray-600 text-sm sm:text-base dark:text-gray-500"
-        style="opacity: 1;"
       >
         {person?.headline || "Programmer"}
       </p>
@@ -78,7 +77,7 @@ const socialList: SocialMediaType[] = socials ?? [];
   <main class="py-16 px-6 sm:px-12 relative flex flex-1 flex-col space-y-16">
     <section class="">
       <h3
-        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
         About me
       </h3>
@@ -116,7 +115,7 @@ const socialList: SocialMediaType[] = socials ?? [];
     </section>
     <section class="">
       <h3
-        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
         Experiences
       </h3>
@@ -126,7 +125,7 @@ const socialList: SocialMediaType[] = socials ?? [];
     </section>
     <section class="">
       <h3
-        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
         Projects
       </h3>
@@ -136,7 +135,7 @@ const socialList: SocialMediaType[] = socials ?? [];
     </section>
     <section class="">
       <h3
-        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
         Educations
       </h3>
@@ -146,7 +145,7 @@ const socialList: SocialMediaType[] = socials ?? [];
     </section>
     <section class="">
       <h3
-        class="mb-4 text-lg font-medium dark:text-gray-500 lg:text-md xl:mb-3"
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
         Coffees
       </h3>
@@ -156,7 +155,7 @@ const socialList: SocialMediaType[] = socials ?? [];
         coffee.
       </p>
       <a
-        href=""
+        href="/beans"
         class="mt-4 underline decoration-dotted text-gray-800 hover:text-blue-900 duration-150 transition-colors dark:text-gray-300"
       >
         See details <SquareArrowOutUpRight class="size-4 inline-block" />

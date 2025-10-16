@@ -40,3 +40,11 @@ export type ProjectType = {
   url?: string
   tech_stacks?: string[] | null;
 }
+
+
+export type CoffeeRoasteryType = {
+  coffee_roastery_id: string;
+  name: string
+  location?: string
+  source_image: string;
+}

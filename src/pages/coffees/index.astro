@@ -1,0 +1,85 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Footer from "../../components/Footer.astro";
+import { SquareArrowOutUpRight } from "@lucide/astro";
+import { supabase } from "../../lib/supabase/client";
+import type { CoffeeRoasteryType, ProjectType } from "../../constant/schema.types";
+import RoasterCard from "../../components/RoasterCard.astro";
+
+const { data: projects, error: proError } = await supabase
+  .from("project")
+  .select("*")
+  .eq("person_id", 1).contains("tags", ["coffee"]);
+
+const projList: ProjectType[] = projects ?? [];
+
+const roasteryList: CoffeeRoasteryType[] = [
+    {
+        coffee_roastery_id: 'd8dfe4f3-7f66-41d4-81cf-64318c4ad716',
+        name: 'Fugol',
+        location: 'Bandung, Indonesia',
+        source_image: '/images/fugol.jpeg'
+    },
+    {
+        coffee_roastery_id: '68b96890-b7f9-462d-9d6e-424355d8052c',
+        name: 'Parakarta',
+        location: 'Jakarta, Indonesia',
+        source_image: '/images/parakarta.png'
+    },
+    {
+        coffee_roastery_id: 'cb2f11af-0147-4d03-9a72-cc7cdad6f20c',
+        name: 'Space Roastery',
+        location: 'Sleman, Indonesia',
+        source_image: '/images/space_roastery.png'
+    },
+    {
+        coffee_roastery_id: '66451e74-c262-444d-8761-5b707f77f7ad',
+        name: 'Arutala',
+        location: 'Banten, Indonesia',
+        source_image: '/images/arutala.jpeg'
+    },
+]
+
+---
+
+<Layout title="Oxtcaw | Oktapian Candra Adi Wijaya">
+  <header class="flex space-x-4 px-6 sm:px-12 items-center justify-start">
+    <div class="p-2 rounded-full bg-gray-200 dark:bg-gray-900">
+      <Icon name="alinara" class="dark:text-gray-400 text-gray-800 size-16" />
+    </div>
+    <div>
+      <h2 class="font-medium text-black dark:text-white text-base md:text-lg">
+        Coffees
+      </h2>
+      <p class="text-gray-600 text-sm sm:text-base dark:text-gray-500">
+        All About coffee and my experiment
+      </p>
+    </div>
+  </header>
+  <main class="py-16 px-6 sm:px-12 relative flex flex-1 flex-col space-y-16">
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
+      >
+        Favorite Roasteries
+      </h3>
+      <div class="grid gap-4 grid-cols-2">
+        {roasteryList?.map((roastery) => <RoasterCard roastery={roastery} />)}
+      </div>
+    </section>
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
+      >
+        Tools
+      </h3>
+      <div class="grid gap-y-4">
+        {projList?.map((proj) => <ProjectCard project={proj} />)}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
