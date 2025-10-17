@@ -64,9 +64,22 @@ const roasteryList: CoffeeRoasteryType[] = [
       <h3
         class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
       >
+        About me
+      </h3>
+      <p class="text-gray-600 mb-6 dark:text-gray-400">
+      I am not a barista or an expert in the world of coffee, I am just a coffee lover, especially when it comes to manual brewing methods. Because the flavors that come out of coffee can vary, especially since most of the notes are far from the coffee I know, which is only bitter.
+      </p>
+      <p class="text-gray-600 mb-6 dark:text-gray-400">
+        But every cup of coffee has its own characteristics, whether it's who brews it, how it's brewed, or the beans themselves, and they're all delicious.
+      </p>
+    </section>
+    <section class="">
+      <h3
+        class="mb-4 text-lg font-medium text-gray-700 dark:text-gray-500 lg:text-md xl:mb-3"
+      >
         Favorite Roasteries
       </h3>
-      <div class="grid gap-4 grid-cols-2">
+      <div class="grid gap-4 grid-cols-1 sm:grid-cols-2">
         {roasteryList?.map((roastery) => <RoasterCard roastery={roastery} />)}
       </div>
     </section>
